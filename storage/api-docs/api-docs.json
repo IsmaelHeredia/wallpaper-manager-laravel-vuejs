@@ -1,0 +1,469 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API para Wallpapers",
+        "description": "API que gestiona el sistema de wallpapers",
+        "contact": {
+            "email": "soporte@localhost.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/ingreso": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Iniciar sesión con OAuth2 (Password Grant)",
+                "operationId": "fab968ecf823a68099578e4372250d89",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@localhost.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso, retorna el token de acceso"
+                    },
+                    "401": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/api/salir": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Cerrar sesión y revocar el token de acceso",
+                "operationId": "33e1af7654386f5758337ab381e5ffe9",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada exitosamente"
+                    },
+                    "401": {
+                        "description": "Usuario no autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cuenta/actualizar": {
+            "put": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Actualizar los datos del usuario autenticado",
+                "operationId": "074062ac520ceaefd291ccf8244c5634",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nuevo Nombre"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "nuevoemail@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "nuevaclave123"
+                                    },
+                                    "photo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado exitosamente"
+                    },
+                    "401": {
+                        "description": "Usuario no autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/estaciones": {
+            "get": {
+                "tags": [
+                    "Estaciones"
+                ],
+                "summary": "Obtener todas las estaciones",
+                "operationId": "85cd69da9a5bed239b590a7afe3865e1",
+                "responses": {
+                    "200": {
+                        "description": "Lista de estaciones"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/estaciones/{id}": {
+            "get": {
+                "tags": [
+                    "Estaciones"
+                ],
+                "summary": "Obtener una estación por ID",
+                "operationId": "b547c4383656bcc558baa912b3955b12",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la estación"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "404": {
+                        "description": "Estación no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/horarios": {
+            "get": {
+                "tags": [
+                    "Horarios"
+                ],
+                "summary": "Obtener todos los horarios",
+                "operationId": "99fd65318320c0312ef911cf02cd60af",
+                "responses": {
+                    "200": {
+                        "description": "Lista de horarios"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/horarios/{id}": {
+            "get": {
+                "tags": [
+                    "Horarios"
+                ],
+                "summary": "Obtener un horario por ID",
+                "operationId": "8602de780b9ded981a6c6d03fcd79ccf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del horario"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "404": {
+                        "description": "Horario no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/wallpapers": {
+            "get": {
+                "tags": [
+                    "Wallpapers"
+                ],
+                "summary": "Obtener todos los wallpapers",
+                "operationId": "4607e9b7aaae1254681262c14b07d6e1",
+                "responses": {
+                    "200": {
+                        "description": "Lista de wallpapers"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Wallpapers"
+                ],
+                "summary": "Crear un nuevo wallpaper",
+                "operationId": "e5980eb9ac4a9e95366c71f953cb7f4b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "ruta": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "es_favorita": {
+                                        "type": "integer"
+                                    },
+                                    "estaciones_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Wallpaper creado exitosamente"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "400": {
+                        "description": "Error en los datos de entrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/wallpapers/{id}": {
+            "get": {
+                "tags": [
+                    "Wallpapers"
+                ],
+                "summary": "Obtener un wallpaper por ID",
+                "operationId": "42e22c1cfbc39ede8efc9af444397650",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wallpaper encontrado"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Wallpaper no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Wallpapers"
+                ],
+                "summary": "Actualizar un wallpaper existente",
+                "operationId": "24f35f1633fd6be52c260cacb5b4fc50",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "ruta": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "es_favorita": {
+                                        "type": "integer"
+                                    },
+                                    "estaciones_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Wallpaper actualizado exitosamente"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Wallpaper no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Wallpapers"
+                ],
+                "summary": "Eliminar un wallpaper",
+                "operationId": "d6ceac3662866ab1dd2528dfc6ba7e79",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wallpaper eliminado exitosamente"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Wallpaper no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Autenticación",
+            "description": "Manejo de autenticación de usuarios con OAuth2"
+        },
+        {
+            "name": "Estaciones",
+            "description": "API para la gestión de estaciones"
+        },
+        {
+            "name": "Horarios",
+            "description": "API para la gestión de horarios"
+        },
+        {
+            "name": "Wallpapers",
+            "description": "API para la gestión de wallpapers"
+        }
+    ]
+}
