@@ -1,0 +1,53 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: wallpapers_laravel
+    ports:
+      - "9090:80"
+    volumes:
+      - .:/var/www/html:delegated
+      - ./docker/.env.docker:/var/www/html/.env
+    depends_on:
+      - mysql
+
+  vite:
+    image: node:18-alpine
+    container_name: wallpapers_vite
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html:delegated
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev"
+    user: "${UID:-1000}:${GID:-1000}"
+    depends_on:
+      - app
+
+  mysql:
+    image: mysql:8.0
+    container_name: wallpapers_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wallpapers
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: wallpapers_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:

@@ -2,6 +2,8 @@ html,
 body {
   height: 100%;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 20px !important;
   font-weight: 700 !important;
@@ -52,10 +54,6 @@ body {
   right: 10px;
 }
 
-th {
-  font-weight: 900 !important;
-}
-
 .center-div {
   display: flex !important;
   justify-content: center !important;
@@ -80,30 +78,6 @@ th {
   right: 0;
   margin-bottom: 23px;
   margin-right: 10px;
-}
-
-.toast {
-  border-radius: 12px !important;
-  font-weight: bold !important;
-  font-size: 1.5rem !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-height: 60px !important;
-  padding: 15px 30px !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  max-width: fit-content !important;
-}
-
-.toast .v-card__text {
-  font-size: 1.5rem !important;
-  font-weight: bold !important;
-  width: auto !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
 }
 
 .boton-icono-tabla {
@@ -138,7 +112,7 @@ th {
 }
 
 .filtro-nombre {
-  padding-left: 100px;
+  padding-left: 50px;
 }
 
 .paginas-wallpapers {
@@ -191,7 +165,7 @@ th {
 }
 
 .gray {
- color: #607D8B;
+  color: #607D8B;
 }
 
 .yellow {
@@ -224,21 +198,21 @@ th {
 
 @-webkit-keyframes flash {
   0% {
-      opacity: .6;
+    opacity: .6;
   }
 
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
 @keyframes flash {
   0% {
-      opacity: .6;
+    opacity: .6;
   }
 
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
@@ -250,25 +224,49 @@ th {
   border-radius: 12px;
 }
 
+.imagen-preview-wrapper {
+  height: 200px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.imagen-preview {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.imagen-placeholder {
+  color: #888;
+  font-size: 14px;
+}
+
 .listado-registros {
   margin-top: 20px;
   margin-right: 100px;
-  height: calc(100vh - 240px);
-  overflow: auto;
+  height: calc(100vh - 320px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 0;
+  text-align: center;
 }
 
 .paginas-wallpapers {
-  padding: 20px 0;
-  text-align: center;
   position: fixed;
   bottom: 0;
   left: 0;
-  width: calc(100% - 80px);
+  width: 100%;
   z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 40px;
+  box-sizing: border-box;
 }
 
 .left-wallpapers {
@@ -300,7 +298,8 @@ th {
 .boton-nuevo {
   margin-top: 10px;
   margin-left: 10px;
-  width: 20px;
+  width: 10px;
+  border-radius: 50%;
 }
 
 .theme-toggle {
@@ -387,4 +386,37 @@ th {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.datos-tabla-wallpapers {
+  margin-left: 10%;
+  margin-right: 10%;
+  overflow: hidden;
+}
+
+.tabla-wallpapers {
+  text-align: center;
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
+.chip-estacion {
+  margin-right: 5px;
+  margin-top: 3px;
+}
+
+.chip-horario {
+  margin-right: 5px;
+  margin-top: 3px;
+}
+
+.boton-icono-tabla {
+  margin-right: 10px;
+}
+
+.graficos {
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 20px;
+  text-align: center;
 }

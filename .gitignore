@@ -21,3 +21,12 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+storage/logs/
+bootstrap/cache/
+
+.env
+/docker/.env.docker
+.env.testing
+
+/scripts/downloads

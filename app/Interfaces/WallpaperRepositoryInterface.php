@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 interface WallpaperRepositoryInterface
 {
     public function getAll();
+    public function paginate(Request $request);
     public function getById($id);
     public function create(Request $request);
     public function update($id, Request $request);

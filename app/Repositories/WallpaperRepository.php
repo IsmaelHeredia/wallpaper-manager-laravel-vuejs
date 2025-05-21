@@ -13,12 +13,89 @@ class WallpaperRepository implements WallpaperRepositoryInterface
 
     public function getAll()
     {
-        return Wallpaper::all();
+        $query = Wallpaper::query();
+
+        $query->select(['id', 'nombre', 'imagen', 'calificacion', 'es_favorita'])
+            ->with([
+                'estaciones:id,nombre',
+                'horarios:id,nombre'
+            ])
+            ->latest('updated_at');
+
+        $wallpapers = $query->get();
+
+        $wallpapers->each(function ($wallpaper) {
+            $wallpaper->estaciones->each->makeHidden('pivot');
+            $wallpaper->horarios->each->makeHidden('pivot');
+        });
+
+        return $wallpapers;
+    }
+
+    public function paginate(Request $request)
+    {
+        $query = Wallpaper::query();
+
+        if (!empty($request->nombre)) {
+            $query->where('nombre', 'like', '%' . $request->nombre . '%');
+        }
+
+        if (!empty($request->estaciones_ids)) {
+            $query->whereHas('estaciones', function ($q) use ($request) {
+                $q->whereIn('estaciones.id', $request->estaciones_ids);
+            });
+        }
+
+        if (!empty($request->horarios_ids)) {
+            $query->whereHas('horarios', function ($q) use ($request) {
+                $q->whereIn('horarios.id', $request->horarios_ids);
+            });
+        }
+
+        $query->select(['id', 'nombre', 'imagen', 'calificacion', 'es_favorita'])
+            ->with([
+                'estaciones:id,nombre',
+                'horarios:id,nombre'
+            ])
+            ->latest('updated_at');
+
+        if ($request->input('per_page') === 'all') {
+
+            $wallpapers = $query->get();
+
+            $wallpapers->each(function ($wallpaper) {
+                $wallpaper->estaciones->each->makeHidden('pivot');
+                $wallpaper->horarios->each->makeHidden('pivot');
+            });
+
+            return response()->json([
+                'data' => $wallpapers,
+                'total' => $wallpapers->count(),
+            ]);
+        }
+
+        $wallpapers = $query->paginate((int) $request->input('per_page', 10));
+
+        $wallpapers->getCollection()->transform(function ($wallpaper) {
+            $wallpaper->estaciones->each->makeHidden('pivot');
+            $wallpaper->horarios->each->makeHidden('pivot');
+            return $wallpaper;
+        });
+
+        return $wallpapers;
     }
 
     public function getById($id)
     {
-        return Wallpaper::findOrFail($id);
+        $wallpaper = Wallpaper::with([
+            'estaciones:id,nombre',
+            'horarios:id,nombre'
+        ])->findOrFail($id);
+
+        $wallpaper->estaciones->each->makeHidden('pivot');
+        $wallpaper->horarios->each->makeHidden('pivot');
+
+        return $wallpaper;
     }
 
     public function create(Request $request)

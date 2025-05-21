@@ -6,7 +6,7 @@
           Ingreso
         </v-card-title>
         <v-card-text class="pa-5">
-          <v-text-field label="Usuario" v-model="nombre" :rules="nombreRules"></v-text-field>
+          <v-text-field label="Email" v-model="email" :rules="emailRules"></v-text-field>
           <v-text-field type="password" label="Clave" v-model="clave" :rules="claveRules"></v-text-field>
         </v-card-text>
         <v-card-actions class="pa-5 center-div">
@@ -21,27 +21,59 @@
 </template>
 
 <script>
+import UsuarioService from '@/services/UsuarioService';
+import { showToast } from '@/utils/toast';
+
+import config from '@/config';
+
 export default {
   data() {
     return {
-      nombre: '',
+      email: '',
       clave: '',
       isLoading: false,
-      nombreRules: [
-        v => !!v || 'El usuario es requerido',
-        v => (v && v.length >= 3) || 'El usuario debe tener al menos 3 caracteres',
+      emailRules: [
+        v => !!v || 'El email es requerido'
       ],
       claveRules: [
-        v => !!v || 'La clave es requerida',
-        v => (v && v.length >= 6) || 'La clave debe tener al menos 6 caracteres',
+        v => !!v || 'La clave es requerida'
       ],
     };
   },
   methods: {
     async validarIngreso() {
-      if (this.$refs.formIngreso.validate()) {
-        this.isLoading = true;
-        // ...
+
+      if (!this.$refs.formIngreso.validate()) return;
+
+      this.isLoading = true;
+
+      try {
+
+        const response = await UsuarioService.login({
+          email: this.email,
+          password: this.clave
+        });
+
+        const token = response.data.access_token;
+
+        sessionStorage.setItem(config.SESSION_NAME, token);
+
+        showToast({
+          message: 'Ingreso exitoso',
+          type: 'success',
+          timeout: 2000,
+          redirectTo: '/dashboard'
+        });
+
+      } catch (error) {
+
+        showToast({
+          message: 'Credenciales incorrectas',
+          type: 'error',
+          timeout: 2000
+        });
+
+      } finally {
         this.isLoading = false;
       }
     },
@@ -50,4 +82,18 @@ export default {
 </script>
 
 <style scoped>
+.ingreso {
+  max-width: 400px;
+  margin: 40px auto;
+}
+
+.center-div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.boton-pequeño {
+  min-width: 120px;
+}
 </style>

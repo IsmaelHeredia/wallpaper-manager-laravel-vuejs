@@ -5,6 +5,15 @@ import vue from "@vitejs/plugin-vue";
 import path from "path";
 
 export default defineConfig({
+    server: {
+        host: '0.0.0.0',
+        port: 5173,
+        hmr: {
+            host: 'localhost',
+            protocol: 'ws',
+        },
+        cors: true,
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
@@ -15,7 +24,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-          '@': path.resolve(__dirname, 'resources/js')
+            '@': path.resolve(__dirname, 'resources/js')
         }
     }
 });

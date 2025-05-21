@@ -13,6 +13,9 @@ use App\Repositories\EstacionRepository;
 use App\Interfaces\HorarioRepositoryInterface;
 use App\Repositories\HorarioRepository;
 
+use App\Interfaces\EstadisticasRepositoryInterface;
+use App\Repositories\EstadisticasRepository;
+
 use App\Interfaces\AuthRepositoryInterface;
 use App\Repositories\AuthRepository;
 
@@ -26,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EstacionRepositoryInterface::class, EstacionRepository::class);
         $this->app->bind(WallpaperRepositoryInterface::class, WallpaperRepository::class);
         $this->app->bind(HorarioRepositoryInterface::class, HorarioRepository::class);
+        $this->app->bind(EstadisticasRepositoryInterface::class, EstadisticasRepository::class);
     }
 
     public function boot(): void

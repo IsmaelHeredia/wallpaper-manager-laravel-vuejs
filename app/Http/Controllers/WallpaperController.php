@@ -8,6 +8,7 @@ use App\Interfaces\WallpaperRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
+use Illuminate\Http\Response;
 
 /**
  * @OA\Tag(name="Wallpapers", description="API para la gestión de wallpapers")
@@ -35,6 +36,83 @@ class WallpaperController extends Controller
     {
         $wallpapers = $this->wallpaperRepository->getAll();
         return response()->json($wallpapers, 200);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/wallpapers/buscar",
+     *     summary="Listar wallpapers paginados con filtros opcionales",
+     *     tags={"Wallpapers"},
+     *     security={{"passport": {}}},
+     *     @OA\Parameter(
+     *         name="nombre",
+     *         in="query",
+     *         description="Buscar por nombre",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="estaciones_ids[]",
+     *         in="query",
+     *         description="Filtrar por IDs de estaciones",
+     *         required=false,
+     *         @OA\Schema(type="array", @OA\Items(type="integer"))
+     *     ),
+     *     @OA\Parameter(
+     *         name="horarios_ids[]",
+     *         in="query",
+     *         description="Filtrar por IDs de horarios",
+     *         required=false,
+     *         @OA\Schema(type="array", @OA\Items(type="integer"))
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Cantidad de resultados por página",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Número de página",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Listado paginado de wallpapers",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="current_page", type="integer"),
+     *             @OA\Property(property="data", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="nombre", type="string"),
+     *                 @OA\Property(property="imagen", type="string"),
+     *                 @OA\Property(property="calificacion", type="integer"),
+     *                 @OA\Property(property="es_favorita", type="boolean"),
+     *                 @OA\Property(property="estaciones", type="array", @OA\Items(
+     *                     @OA\Property(property="id", type="integer"),
+     *                     @OA\Property(property="nombre", type="string")
+     *                 )),
+     *                 @OA\Property(property="horarios", type="array", @OA\Items(
+     *                     @OA\Property(property="id", type="integer"),
+     *                     @OA\Property(property="rango", type="string")
+     *                 )),
+     *             )),
+     *             @OA\Property(property="last_page", type="integer"),
+     *             @OA\Property(property="per_page", type="integer"),
+     *             @OA\Property(property="total", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Usuario no autenticado"
+     *     )
+     * )
+     */
+    public function search(Request $request)
+    {
+        return response()->json($this->wallpaperRepository->paginate($request));
     }
 
     /**
@@ -146,9 +224,9 @@ class WallpaperController extends Controller
      *     @OA\Response(response=404, description="Wallpaper no encontrado")
      * )
      */
-    public function destroy($id): JsonResponse
+    public function destroy($id): Response
     {
         $this->wallpaperRepository->delete($id);
-        return response()->json(['message' => 'Wallpaper eliminado exitosamente'], 200);
+        return response()->noContent();
     }
 }

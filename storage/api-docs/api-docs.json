@@ -131,7 +131,7 @@
                 "operationId": "85cd69da9a5bed239b590a7afe3865e1",
                 "responses": {
                     "200": {
-                        "description": "Lista de estaciones"
+                        "description": "Listado de estaciones"
                     },
                     "401": {
                         "description": "No autenticado"
@@ -188,7 +188,7 @@
                 "operationId": "99fd65318320c0312ef911cf02cd60af",
                 "responses": {
                     "200": {
-                        "description": "Lista de horarios"
+                        "description": "Listado de horarios"
                     },
                     "401": {
                         "description": "No autenticado"
@@ -245,7 +245,7 @@
                 "operationId": "4607e9b7aaae1254681262c14b07d6e1",
                 "responses": {
                     "200": {
-                        "description": "Lista de wallpapers"
+                        "description": "Listado de wallpapers"
                     },
                     "401": {
                         "description": "No autorizado"
@@ -305,6 +305,155 @@
                 "security": [
                     {
                         "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/wallpapers/buscar": {
+            "get": {
+                "tags": [
+                    "Wallpapers"
+                ],
+                "summary": "Listar wallpapers paginados con filtros opcionales",
+                "operationId": "fb337a47fc51700fc9339d983b5a22fe",
+                "parameters": [
+                    {
+                        "name": "nombre",
+                        "in": "query",
+                        "description": "Buscar por nombre",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "estaciones_ids[]",
+                        "in": "query",
+                        "description": "Filtrar por IDs de estaciones",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "horarios_ids[]",
+                        "in": "query",
+                        "description": "Filtrar por IDs de horarios",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Cantidad de resultados por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Listado paginado de wallpapers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string"
+                                                    },
+                                                    "imagen": {
+                                                        "type": "string"
+                                                    },
+                                                    "calificacion": {
+                                                        "type": "integer"
+                                                    },
+                                                    "es_favorita": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "estaciones": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "nombre": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "horarios": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "rango": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "last_page": {
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuario no autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
                     }
                 ]
             }

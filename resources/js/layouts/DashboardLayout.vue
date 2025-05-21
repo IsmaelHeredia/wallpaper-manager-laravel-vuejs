@@ -6,7 +6,7 @@
     <router-view />
   </div>
 
-  <v-btn color="primary" class="theme-toggle btn-theme" @click="changeTheme()" icon>
+  <v-btn color="primary" class="floating-btn btn-theme" @click="changeTheme()" icon>
     <v-icon :color="theme.global.current.value.colors.onBackground">
       {{ store.mode === 2 ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
     </v-icon>
@@ -17,12 +17,19 @@
   </v-btn>
 
   <v-btn :to="{ name: 'Account' }" color="primary" class="floating-btn btn-account" icon>
-    <v-avatar size="40">
-      <img src="http://localhost:8000/storage/photos/saitama.png" alt="Perfil" class="avatar-img" />
-    </v-avatar>
+    <v-tooltip location="top">
+      <template #activator="{ props }">
+        <v-btn v-bind="props" :to="{ name: 'Account' }" color="primary" class="floating-btn btn-account" icon>
+          <v-avatar size="40">
+            <v-img :src="`/storage/photos/${avatar}`" :alt="username" class="avatar-img" />
+          </v-avatar>
+        </v-btn>
+      </template>
+      <span>{{ username }}</span>
+    </v-tooltip>
   </v-btn>
 
-  <v-btn :to="{ name: 'Login' }" color="primary" class="floating-btn btn-logout" icon>
+  <v-btn :to="{ name: 'Login' }" color="primary" class="floating-btn btn-logout" @click="logout()" icon>
     <v-icon>mdi-logout</v-icon>
   </v-btn>
 
@@ -52,6 +59,11 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import { useRoute } from "vue-router";
 
+import UsuarioService from '@/services/UsuarioService';
+import { showToast } from '@/utils/toast';
+
+import config from '@/config';
+
 const route = useRoute();
 
 const store = themes();
@@ -59,6 +71,9 @@ const theme = useTheme();
 const collapsed = ref(false);
 const isOnMobile = ref(false);
 const dialog = ref(false);
+
+const username = ref('');
+const avatar = ref('');
 
 const changeTheme = () => {
   store.toogle();
@@ -119,10 +134,28 @@ const onResize = () => {
   collapsed.value = isOnMobile.value;
 };
 
-onMounted(() => {
+onMounted(async () => {
   onResize();
   window.addEventListener("resize", onResize);
+  let response = await UsuarioService.validar();
+  let datos = response.data;
+  username.value = datos.name;
+  avatar.value = datos.photo;
 });
+
+const logout = () => {
+
+  sessionStorage.setItem(config.SESSION_NAME, '');
+
+  showToast({
+    message: 'La sesión fue cerrada',
+    type: 'success',
+    timeout: 2000,
+    redirectTo: '/'
+  });
+
+};
+
 </script>
 
 <style scoped></style>
