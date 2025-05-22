@@ -36,7 +36,7 @@
         </v-col>
     </v-row>
 
-    <div class="listado-registros">
+    <div class="listado-home">
         <v-container fluid grid-list-md>
             <div v-if="wallpapers.length">
                 <v-row class="pa-2">

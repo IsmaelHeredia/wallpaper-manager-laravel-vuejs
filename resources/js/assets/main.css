@@ -246,10 +246,22 @@ body {
   font-size: 14px;
 }
 
-.listado-registros {
+.listado-home {
   margin-top: 20px;
+  margin-left: 30px;
   margin-right: 100px;
-  height: calc(100vh - 320px);
+  height: calc(100vh - 240px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.listado-wallpapers {
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 100px;
+  height: calc(100vh - 310px);
   overflow-y: auto;
   overflow-x: hidden;
   padding-bottom: 0;
@@ -412,6 +424,14 @@ body {
 
 .boton-icono-tabla {
   margin-right: 10px;
+}
+
+.acciones-wrapper {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
 .graficos {

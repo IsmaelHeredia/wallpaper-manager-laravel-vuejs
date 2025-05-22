@@ -21,7 +21,7 @@ const changeTheme = () => {
     </v-container>
 
     <div class="botones-theme">
-      <v-btn @click="changeTheme()" icon>
+      <v-btn color="primary" @click="changeTheme()" icon>
         <v-icon :color="theme.global.current.value.colors.onBackground">
           {{ store.mode === 2 ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
         </v-icon>

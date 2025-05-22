@@ -16,7 +16,7 @@ export const themes = defineStore('themes', {
                 newThemeName = "customDarkTheme";
             } else {
                 newMode = 1;
-                newThemeName = "light";
+                newThemeName = "customLightTheme";
             }
 
             this.mode = newMode;

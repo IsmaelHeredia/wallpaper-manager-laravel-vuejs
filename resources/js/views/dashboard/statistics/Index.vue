@@ -3,7 +3,7 @@
         <v-row>
             <v-col cols="12" md="6">
                 <v-card>
-                    <v-card-title>Wallpapers por Estación</v-card-title>
+                    <v-card-title>Wallpapers por estación</v-card-title>
                     <v-card-text>
                         <DoughnutChart :data="chartDataEstaciones" />
                     </v-card-text>
@@ -12,7 +12,7 @@
 
             <v-col cols="12" md="6">
                 <v-card>
-                    <v-card-title>Wallpapers por Horario</v-card-title>
+                    <v-card-title>Wallpapers por horario</v-card-title>
                     <v-card-text>
                         <DoughnutChart :data="chartDataHorarios" />
                     </v-card-text>

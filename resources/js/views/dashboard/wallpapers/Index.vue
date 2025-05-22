@@ -53,7 +53,7 @@
         </v-card>
     </v-dialog>
 
-    <div class="listado-registros">
+    <div class="listado-wallpapers">
         <v-table>
             <thead>
                 <tr>
@@ -73,7 +73,7 @@
                         Estaciones
                     </th>
                     <th class="text-center">
-                        Opción
+                        Acciones
                     </th>
                 </tr>
             </thead>
@@ -99,12 +99,16 @@
                         </v-chip>
                     </td>
                     <td>
-                        <v-btn class="boton-icono-tabla" density="compact" size="x-large"
-                            :to="{ name: 'SaveWallpaper', params: { id: wallpaper.id } }"><v-icon>mdi-pencil</v-icon></v-btn>
-                        <v-btn class="boton-icono-tabla" density="compact" size="x-large"
-                            @click="confirmarEliminar(wallpaper)">
+                        <div class="acciones-wrapper">
+                            <v-btn class="boton-icono-tabla" density="compact" size="x-large"
+                                :to="{ name: 'SaveWallpaper', params: { id: wallpaper.id } }">
+                            <v-icon>mdi-pencil</v-icon>
+                            </v-btn>
+                            <v-btn class="boton-icono-tabla" density="compact" size="x-large"
+                                @click="confirmarEliminar(wallpaper)">
                             <v-icon>mdi-delete</v-icon>
-                        </v-btn>
+                            </v-btn>
+                        </div>
                     </td>
                 </tr>
             </tbody>

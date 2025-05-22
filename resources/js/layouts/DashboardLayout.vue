@@ -80,7 +80,7 @@ const changeTheme = () => {
   let themeName = store.themeName;
   theme.global.name.value = themeName;
 
-  if (themeName === "light") {
+  if (themeName === "customLightTheme") {
     selectedTheme.value = "white-theme";
   } else {
     selectedTheme.value = "";
@@ -117,7 +117,7 @@ const menu = ref([
   },
   {
     href: "/dashboard/statistics",
-    title: "Estadisticas",
+    title: "Estadísticas",
     icon: faIcon({ icon: "fa-solid fa-chart-bar" }),
     isActive: () => route.path.startsWith("/dashboard/statistics")
   }
