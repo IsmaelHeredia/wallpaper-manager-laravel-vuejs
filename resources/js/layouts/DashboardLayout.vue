@@ -39,7 +39,7 @@
         <h2>About</h2>
       </v-card-title>
       <v-card-text>
-        <h4>Nombre: Wallpapers Manager</h4>
+        <h4>Nombre: Wallpaper Manager</h4>
         <h4>Versión: 1.0</h4>
         <h4>Autor: Ismael Heredia</h4>
       </v-card-text>
