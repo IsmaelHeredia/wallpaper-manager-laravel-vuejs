@@ -15,7 +15,7 @@ class WallpaperUpdateRequest extends FormRequest
     {
         return [
             'nombre' => 'sometimes|required|string|max:255',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
             'calificacion' => 'sometimes|required|integer',
             'es_favorita' => 'sometimes|required|boolean',
             'estaciones_ids' => 'nullable|array',

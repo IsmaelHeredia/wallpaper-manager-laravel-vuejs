@@ -15,7 +15,7 @@ class WallpaperCreateRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string|max:255',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
             'calificacion' => 'required|integer',
             'es_favorita' => 'required|boolean',
             'estaciones_ids' => 'nullable|array',
