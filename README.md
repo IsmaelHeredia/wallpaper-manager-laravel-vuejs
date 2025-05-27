@@ -4,7 +4,7 @@ Este proyecto es un sistema de gestión de wallpapers desarrollado con **Laravel
 
 ## Funcionalidades principales
 
-- Autenticación obligatoria mediante **JWT**.
+- Autenticación obligatoria mediante OAuth2 (Laravel Passport)
 - Posibilidad de cambiar usuario y contraseña.
 - Cambio dinámico de tema (modo claro/oscuro).
 - Gestión completa de wallpapers: agregar, editar y eliminar.
